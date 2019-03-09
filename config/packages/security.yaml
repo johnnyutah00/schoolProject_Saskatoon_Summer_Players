@@ -1,0 +1,61 @@
+security:
+    encoders:
+      App\Entity\Member: bcrypt
+    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+    providers:
+        member:
+            entity:
+              class: App\Entity\Member
+              property: userName
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            anonymous: true
+
+            access_denied_url: /show
+
+            form_login:
+              login_path: login
+              check_path: login_check
+              default_target_path: show_index
+              username_parameter: _username
+              password_parameter: _password
+              provider: member
+
+            remember_me:
+              secret:   '%kernel.secret%'
+              lifetime: 604800 # 1 week in seconds
+              path:     /  #The path where the cookie associated with the remember me is used. / is the entire website
+
+            logout:
+              path: /logout
+              target: /
+
+            # activate different ways to authenticate
+
+            # http_basic: true
+            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+
+            # form_login: true
+            # https://symfony.com/doc/current/security/form_login_setup.html
+
+
+    role_hierarchy:
+          ROLE_GM:        [ROLE_BM, ROLE_MEMBER]
+          ROLE_BM:         ROLE_MEMBER
+          ROLE_MEMBER:
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    # Pages can be completely restricted by putting them behind their respective route
+    access_control:
+        - { path: ^/show/admin, roles: ROLE_GM }
+        - { path: ^/admin, roles: ROLE_GM }
+        - { path: ^/board, roles: ROLE_BM }
+        - { path: ^/member, roles: ROLE_MEMBER }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+

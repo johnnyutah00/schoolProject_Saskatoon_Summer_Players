@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SuggestedShow{% endblock %}
+
+{% block body %}
+    <h1>SuggestedShow</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ suggested_show.id }}</td>
+            </tr>
+            <tr>
+                <th>SuggestedTitle</th>
+                <td>{{ suggested_show.suggestedTitle }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('suggested_show_index') }}">back to list</a>
+
+    <a href="{{ path('suggested_show_edit', {'id': suggested_show.id}) }}">edit</a>
+
+    {{ include('suggested_show/_delete_form.html.twig') }}
+{% endblock %}

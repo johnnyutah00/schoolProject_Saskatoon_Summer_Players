@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AuditionDetails index{% endblock %}
+
+{% block body %}
+    <h1>AuditionDetails index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>PlayTitle</th>
+                <th>PlayImage</th>
+                <th>AuditionDetails</th>
+                <th>DirectorMessage</th>
+                <th>HowToAudition</th>
+                <th>Synopsis</th>
+                <th>CharacterSummeries</th>
+                <th>NoteFromDirector</th>
+                <th>AuditionMaterials</th>
+                <th>Id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for audition_detail in audition_details %}
+            <tr>
+                <td>{{ audition_detail.playTitle }}</td>
+                <td>{{ audition_detail.playImage }}</td>
+                <td>{{ audition_detail.auditionDetails }}</td>
+                <td>{{ audition_detail.directorMessage }}</td>
+                <td>{{ audition_detail.howToAudition }}</td>
+                <td>{{ audition_detail.synopsis }}</td>
+                <td>{{ audition_detail.characterSummeries }}</td>
+                <td>{{ audition_detail.noteFromDirector }}</td>
+                <td>{{ audition_detail.auditionMaterials }}</td>
+                <td>{{ audition_detail.id }}</td>
+                <td>
+                    <a href="{{ path('audition_details_show', {'id': audition_detail.id}) }}">show</a>
+                    <a href="{{ path('audition_details_edit', {'id': audition_detail.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('audition_details_new') }}">Create new</a>
+{% endblock %}

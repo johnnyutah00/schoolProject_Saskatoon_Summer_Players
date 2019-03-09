@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Volunteer Signup{% endblock %}
+
+{% block body %}
+    {%  if app.user  %}
+
+        <div class="container" id="volunteerForm">
+            <div class="row">
+                <div class="col-sm-6 offset-sm-3 text-center">
+                    <h1 id="title">Volunteer</h1>
+                    {{ include('member_volunteer/_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <h1 class="text-center">You must log in to access this page.</h1>
+        <div class="col-lg-3 col-md-6 col-sm-8 mx-auto">
+            <!--TODO: change 'member_new' to the proper name for login when we know it -->
+            <form action="{{ path('login_check') }}" method="post">
+
+                <div class="form-group">
+                    <label for="userNameEmail">Email address</label>
+                    <input type="email" class="form-control" id="userNameEmail" name="_username" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label for="passWord">Password</label>
+                    <input type="password" class="form-control" id="passWord" name="_password" placeholder="Password">
+                </div>
+                <input type="hidden" name="_target_path" value="{{  path('member_volunteer_new') }}"/>
+                <button type="submit" class="btn btn-primary">Log In</button>
+                <label><a id="becomeMember" href="{{ path('member_new') }}">Not a member yet?</a></label>
+            </form>
+        </div>
+    {% endif %}
+
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script>
+        $(document).ready(function() {
+            $('#member_volunteer_Submit').onsubmit(function() {
+                    $('#exampleModal').modal();
+            });
+        });</script>
+    {%  endblock %}
+{% endblock %}

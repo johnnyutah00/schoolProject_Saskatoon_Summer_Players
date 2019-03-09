@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}About Us{% endblock %}
+
+{% block body %}
+    <h1 class="text-center mb-5">Board Members</h1>
+    <div class="container">
+        <div class = "row">
+                {% if(memberList == null) or  (memberList is empty)%}
+
+                    <h2>List of Board Members is not available at this time.</h2>
+                {% endif %}
+
+                {% for mem in memberList %}
+            <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
+                    {% if((mem.firstName != "")  and  (mem.lastName != "") and (mem.memberGroups != "") ) %}
+                        <h3>{{  mem.firstName }} {{ mem.lastName }}</h3>
+                        <h6 class="mb-4">{{ mem.memberGroups }}</h6>
+                    {% endif %}
+            </div>
+                {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

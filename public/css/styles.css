@@ -1,0 +1,52 @@
+body {
+    padding-top: 100px;
+    font-size: 18px;
+    font-family: 'EB Garamond', serif;
+    /*background-image: linear-gradient(#434343, #000000);*/
+}
+
+/********** Bold items **************/
+.bold {
+    font-weight: bold;
+
+}
+
+/****** SSPShow Info and Title *********/
+.showTitle {
+    margin-top: 40px;
+
+}
+.showInfo {
+    padding-left: 30px;
+}
+
+.currentStatus {
+    font-size: 72px;
+    padding-top: 15px;
+    padding-bottom: 25px;
+}
+
+#buttons {
+    padding-top: 25px;
+
+}
+
+/****** Images *************/
+.img-fluid {
+    margin-top: 75px;
+}
+
+
+/******** Member Registration ********/
+#memberReg {
+    padding-top: 25px;
+}
+
+
+
+
+
+/*.carousel-inner img {*/
+/*padding-top: 10px;*/
+/*margin: auto;*/
+/*}*/

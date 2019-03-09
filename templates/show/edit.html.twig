@@ -1,0 +1,12 @@
+
+{% extends 'base.html.twig' %}
+{% block title %}New Show{% endblock %}
+
+{% block body %}
+    <h1 id="editShowTitle">Edit {{ show.name }}</h1>
+
+    <button onclick="window.location.href='{{ path('address_new') }}'">Add new location</button>
+    {{ include('show/_form.html.twig') }}
+
+    <a href="{{ path('edit_index') }}">back to edit index</a>
+{% endblock %}

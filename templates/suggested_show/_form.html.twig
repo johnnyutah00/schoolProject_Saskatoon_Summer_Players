@@ -1,0 +1,10 @@
+{{ form_start(form) }}
+    <div class="form-group">
+        {{ form_label(form.suggestedTitle, null, {
+            'label': 'Title'
+        }) }}
+        {{ form_widget(form.suggestedTitle, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.suggestedTitle) }}
+        <button class="btn" id="suggestButton" >{{ button_label|default('Make Suggestion') }}</button>
+    </div>
+{{ form_end(form) }}

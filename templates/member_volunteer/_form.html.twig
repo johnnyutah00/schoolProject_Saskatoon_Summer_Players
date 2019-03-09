@@ -1,0 +1,45 @@
+{% block body %}
+    {{ form_start(form) }}
+    <div class="form-check form-check-inline">
+    {{ form_widget(form.volunteerOptions[0], {'attr': {'class': 'form-check-input', 'id': 'volOpts0'}}) }}
+    {{ form_label(form.volunteerOptions[0], null, {'label_attr': {'class': 'form-check-label', 'for': 'volOpts0'}}) }}
+    </div>
+    <div class="form-check form-check-inline">
+        {{ form_widget(form.volunteerOptions[1], {'attr': {'class': 'form-check-input', 'id': 'volOpts1'}}) }}
+        {{ form_label(form.volunteerOptions[1], null, {'label_attr': {'class': 'form-check-label', 'for': 'volOpts1'}}) }}
+    </div>
+    <div class="form-check form-check-inline">
+        {{ form_widget(form.volunteerOptions[2], {'attr': {'class': 'form-check-input', 'id': 'volOpts2'}}) }}
+        {{ form_label(form.volunteerOptions[2], null, {'label_attr': {'class': 'form-check-label', 'for': 'volOpts2'}}) }}
+    </div>
+    <div class="form-check form-check-inline">
+        {{ form_widget(form.volunteerOptions[3], {'attr': {'class': 'form-check-input', 'id': 'volOpts3'}}) }}
+        {{ form_label(form.volunteerOptions[3], null, {'label_attr': {'class': 'form-check-label', 'for': 'volOpts3'}}) }}
+    </div>
+    <div class="form-check form-check-inline">
+        {{ form_widget(form.volunteerOptions[4], {'attr': {'class': 'form-check-input', 'id': 'volOpts4'}}) }}
+        {{ form_label(form.volunteerOptions[4], null, {'label_attr': {'class': 'form-check-label', 'for': 'volOpts4'}}) }}
+    </div>
+    <div class="form-error">
+        {{ form_errors(form.volunteerOptions) }}
+    </div>
+
+    {{ form_row(form.Other) }}
+    <div class="form-error" id="errors">
+        {% if errors|slice(0,1)|length > 0 %}
+            {{ errors[0] }}
+        {% endif %}
+
+        {% if errors|slice(1)|length > 0 %}
+            {{ errors[1] }}
+        {% endif %}
+    </div>
+
+    {{ form_row(form.age) }}
+
+    {{ form_row(form.additionalInfo) }}
+
+
+    {{ form_end(form) }}
+
+{% endblock %}

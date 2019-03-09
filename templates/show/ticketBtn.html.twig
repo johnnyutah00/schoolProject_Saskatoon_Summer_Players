@@ -1,0 +1,14 @@
+{% block ticketbutton %}
+<!-- A working button will be created if the ticket URL is not empty. -->
+{% if show.getTicketLink != '' %}
+<form action="http://{{ show.getTicketLink }}" method="POST">
+    <button type="submit">Buy Tickets Here!</button>
+</form>
+<!-- A disabled button will be created if the ticket URL is empty. -->
+{% elseif show.getTicketLink == '' %}
+<button disabled>Tickets Coming Soon</button>
+<!-- No button will be created if the show object doesn't exist,
+don't need to code this because if the show object is not passed in then
+the above comparisons will be false anyways. -->
+{% endif %}
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if audition_detail.playTitle != null%}
+    {{ audition_detail.playTitle }}
+    {% elseif audition_detail.playTitle == null %}
+    {{ 'AuditionDetails' }}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% if audition_detail.playTitle %}
+        <h1>{{ audition_detail.playTitle }}</h1>
+        <img id="playTitle" src="{{ asset('images/Die.png') }}" alt="{{ audition_detail.playTitle }}" />
+        {% if audition_detail.getAuditionDetails %}
+            <h2 class="ad">Audition Details:</h2>
+            <p>{{ audition_detail.getAuditionDetails }}</p>
+        {% endif %}
+        {% if audition_detail.getDirectorMessage %}
+            <h2 class="dm">Director's Message:</h2>
+            <p>{{ audition_detail.getDirectorMessage }}</p>
+        {% endif %}
+        {% if audition_detail.getHowToAudition %}
+            <h2 class="hta">How to Audition</h2>
+            <p>{{ audition_detail.getHowToAudition }}</p>
+        {% endif %}
+        {% if audition_detail.getSynopsis %}
+            <h2 class="syn">Synopsis</h2>
+            <p>{{ audition_detail.getSynopsis }}</p>
+        {% endif %}
+        {% if audition_detail.getCharacterSummeries %}
+            <h2 class="cs">Character Summaries</h2>
+            <p>{{ audition_detail.getCharacterSummeries }}</p>
+        {% endif %}
+        {% if audition_detail.getNoteFromDirector %}
+            <h2 class="nfd">Note from Director</h2>
+            <p>{{ audition_detail.getNoteFromDirector }}</p>
+        {% endif %}
+        {% if audition_detail.getAuditionMaterials %}
+            <h2 class="am">Audition Materials</h2>
+            <p>{{ audition_detail.getAuditionMaterials }}</p>
+        {% endif %}
+
+    {% else %}
+        <p>No Audition Information Found</p>
+    {% endif %}
+{% endblock %}

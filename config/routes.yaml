@@ -1,0 +1,11 @@
+#index:
+#    path: /
+#    controller: App\Controller\AuditionInformation::index
+#
+#index:
+#    path: /auditioninformation
+#    controller: App\Controller\DefaultController::index
+
+index:
+    path: /
+    controller: App\Controller\ShowController::index

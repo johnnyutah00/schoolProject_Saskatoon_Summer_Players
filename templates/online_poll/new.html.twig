@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Online Poll{% endblock %}
+
+{% block body %}
+
+    <style>body > form > div:nth-child(2) > label{
+            visibility: hidden;
+        }
+        #online_poll_Options{
+            visibility: hidden;
+        }
+    </style>
+
+    {{ form_start(form) }}
+
+    <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
+
+
+        <h1>Create new Online Poll</h1>
+        <div class="form-group">
+
+            {#Name field#}
+            {{ form_label(form.Name, null, {
+                'label': 'Name'
+            }) }}
+            {{ form_widget(form.Name, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.Name) }}
+        </div>
+
+        <div class="form-group">
+            {#Description field#}
+            {{ form_label(form.Description, null, {
+                'label': 'Description'
+            }) }}
+            {{ form_widget(form.Description , {'attr': {'class': 'form-control', 'rows': 5}}) }}
+            {{ form_errors(form.Description) }}
+        </div>
+
+        <hr />
+
+        <div id= "OptionList" class="form-group">
+            <label>Options</label>
+
+            {#Add and remove buttons#}
+            <a id="btnAdd" data-list="#optionsList" class="btn btn-success" type="button"><i class="fas fa-plus"></i></a>
+            <a id="btnRemove" data-list="#optionsList" class="btn btn-danger" type="button"><i class="fas fa-trash"></i></a>
+            <br/>
+            <br/>
+
+            {#List of all options#}
+            <ul id="optionsList" data-prototype="{{ form_widget(form.Options.vars.prototype)|e }}"
+                data-widget-tags="{{ '<li></li>'|e }}">
+                <li id="Options">
+                    <input type="text" id="form_options_0" name="online_poll[Options][0]" class="form-control" placeholder="Insert Option" pattern="^(.{1,200})$"
+                           title="Options must be 200 characters or less" required/>
+                </li>
+                <li id="listItemOption">
+                    <input type="text" id="form_options_1" name="online_poll[Options][1]" class="form-control" placeholder="Insert Option" pattern="^(.{1,200})$"
+                           title="Username should only contain lowercase letters. e.g. john" required/>
+                </li>
+            </ul>
+
+            <button class="btn btn-primary btn-block" >{{ button_label|default('Save') }}</button>
+            <a class="btn btn-secondary btn-block" href="{{ path('online_poll_index') }}">Cancel</a>
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        var ul = $("#optionsList");
+        var count = 1;
+        jQuery(document).ready(function () {
+             $("#btnAdd").click(function (){ //When the add button is clicked, if there isn't already 10 inputs on the page add one.
+                 if (count < 9) {
+                     count++;
+                     ul.append('<li id="listItemOption"><input type="text" id="form_options_' + count +'" name="online_poll[Options][' + count + ']" class="form-control" placeholder="Insert Option" pattern="^(.{1,200})$" ' +
+                         'title="Username should only contain lowercase letters. e.g. john" required/></li>');
+                 }
+             });
+             $("#btnRemove").click(function (){ //When the remove button is clicked, as long as there are more than two option inputs remove them.
+                 if (count > 1){
+                     count--;
+                     $("#listItemOption:last-of-type").remove();
+                 }
+             })
+        });
+
+    </script>
+{% endblock %}

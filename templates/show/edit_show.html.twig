@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Update Show{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/edit_show.css') }}" />
+{% endblock %}
+
+{% block body %}
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/edit_show.js') }}"></script>
+{%  endblock %}

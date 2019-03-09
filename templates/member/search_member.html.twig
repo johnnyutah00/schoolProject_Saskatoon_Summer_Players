@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+{% block title %}Search Member{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/search_member.css') }}" />
+{% endblock %}
+
+{% block body %}
+
+    <!-- Label and input for member to search for -->
+    <form class="form-inline">
+        <div class="form-group">
+            <label for="searchName" class="control-label" id="memberLabelName">Member to search for</label>
+            <input type="text" class="form-control" id="searchName" name="memberName" placeholder="John Doe">
+        </div>
+
+        <div class="form-group"> <!-- Submit button !-->
+            <button type="submit" class="btn btn-primary" id="searchMemberButton">Search Members</button>
+        </div>
+    </form>
+
+    <!-- If return array contains some members -->
+    {% if memName|length > 0 %}
+    <div class="memberSearchInfo">
+        {% for member in returnMembersArray %}
+            <p>{{ member.firstName }}</p>
+            <p>{{ member.lastName }}</p>
+            <p>{{ member.userName }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Display message when no member matches -->
+    {% if isFound == false %}
+        <p id="notFound">Did not find any members by that name!</p>
+    {% endif %}
+
+    <!-- Area to display text when user does not enter any information -->
+    <p id="nothingEntered"></p>
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script src="{{ asset('js/search_member.js') }}"></script>
+    {%  endblock %}
+{% endblock %}

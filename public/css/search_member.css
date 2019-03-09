@@ -1,0 +1,16 @@
+body {
+    padding-left: 25px;
+}
+/********* Search Member ************/
+label#memberLabelName {
+
+    padding-right: 15px;
+}
+
+p#notFound {
+    padding-top: 15px;
+}
+
+p#nothingEntered {
+    padding-top: 15px;
+}

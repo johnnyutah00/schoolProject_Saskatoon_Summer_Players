@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MemberVolunteer index{% endblock %}
+
+{% block body %}
+    <h1>Member Volunteer List</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Age</th>
+                <th>Positions Volunteered For</th>
+                <th>Additional Info</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for member_volunteer in member_volunteers %}
+            <tr>
+                <td>{{ member_volunteer.member.firstName}} {{ member_volunteer.member.lastName  }}</td>
+                <td>{{ member_volunteer.member }}</td>
+                <td>{{ member_volunteer.age }}</td>
+                <td>{{ member_volunteer.volunteerOptions ? member_volunteer.volunteerOptions|join(', ') : '' }}</td>
+                <td>{{ member_volunteer.additionalInfo }}</td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

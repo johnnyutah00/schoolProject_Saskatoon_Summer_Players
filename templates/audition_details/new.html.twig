@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}
+    {%  if audition_detail.playTitle %}
+        {{ audition_detail.getPlayTitle }}
+    {% else %}
+        AuditionDetails
+    {% endif %}
+{% endblock %}
+
+
+{% block body %}
+    {{ include('audition_details/show.html.twig') }}
+    <a href="{{ path('audition_details_index') }}">back to list</a>
+{% endblock %}

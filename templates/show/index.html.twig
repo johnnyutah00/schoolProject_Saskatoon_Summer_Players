@@ -1,0 +1,226 @@
+{% extends 'base.html.twig' %}
+{% block title %}Show index{% endblock %}
+
+{% block body %}
+
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <div class="container-fluid" id="buttons">
+        <div class="row text-center">
+            <div class="col-12">
+                <a class="btn btn-secondary active" role="button" id="prevShowsBtn" aria-pressed="true" href="?show=-1">Previous Shows</a>
+                <a class="btn btn-secondary active" role="button" aria-pressed="true" id="currentShowsBtn" {% if showRequest == -1 %} href="?show=0" {% endif %}>Current Shows</a>
+                <a class="btn btn-secondary active" role="button" aria-pressed="true" id="futureShowsBtn" {% if showRequest == -1 %} href="?show=1" {% endif %}>Future Shows</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Volunteer Modal to be shown on successful volunteer submission -->
+    {% if hasVolunteered %}
+        <!-- Modal -->
+        <div class="modal fade" id="volunteerModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ModalLongTitle">New Volunteer</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        You've Successfully Volunteered!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if showPasswordResetDone %}
+        <!-- Modal -->
+        <div class="modal fade" id="passwordResetModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ModalLongTitle">Password Reset</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">A password reset request was sent to your email!</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if showNewPasswordResetDone %}
+        <!-- Modal -->
+        <div class="modal fade" id="passwordResetDoneModal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ModalLongTitle">Password Reset Completed</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Your password has been updated!</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+
+    {#<h2 id="suggestSuccess">Thank you for entering a suggestion.</h2>#}
+    {% if showRequest == 0 %}
+        <div class="container-fluid currentShow">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="currentStatus">Now Playing</p>
+                </div>
+            </div>
+            {% for show in returnArray|slice(0,1) %}
+                <div class="row">
+                    <div class="col-sm-6 showInfo">
+                        <h1 class="showTitle">{{ show.name }}</h1>
+                        <span class="bold">Date: </span><span>{{ show.date|date('Y-m-d') }}</span><br/>
+                        <span class="bold">Ticket Price: </span><span>{{ show.ticketPrice }}</span><br/>
+                        <span class="bold">Location: </span><span>{{ show.location }}</span><br/>
+                        <br/><span class="bold">Synopsis: </span><span>{{ show.synopsis }}</span>
+                    </div>
+                    <div class="col-6">
+                        <img class="img-fluid rounded mx-auto d-block shadow-lg p-3 mb-5 bg-white rounded" src="../images{{ asset(show.picturePath) }}"/>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+
+        <div class="container-fluid futureShow" style="display: none;" >
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="currentStatus">Upcoming Shows</p>
+                </div>
+            </div>
+            {% for show in returnArray|slice(1) %}
+                <div class="row">
+                    <div class="col-sm-6 showInfo">
+                        <h1 class="showTitle">{{ show.name }}</h1>
+                        <span class="bold">Date: </span><span>{{ show.date|date('Y-m-d') }}</span><br/>
+                        <span class="bold">Ticket Price: </span><span>{{ show.ticketPrice }}</span><br/>
+                        <span class="bold">Location: </span><span>{{ show.location }}</span><br/>
+                        <br/><span class="bold">Synopsis: </span><span>{{ show.synopsis }}</span>
+                    </div>
+                    <div class="col-6">
+                        <img class="img-fluid rounded mx-auto d-block shadow-lg p-3 mb-5 bg-white rounded" src="../images{{ asset(show.picturePath) }}"/>
+                    </div>
+                </div>
+                <br/>
+                <br/>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if showRequest > 0 %}
+        <div class="container-fluid currentShow" style="display: none;">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="currentStatus">Now Playing</p>
+                </div>
+            </div>
+            {% for show in returnArray|slice(0,1) %}
+                <div class="row">
+                    <div class="col-sm-6 showInfo">
+                        <h1 class="showTitle">{{ show.name }}</h1>
+                        <span class="bold">Date: </span><span>{{ show.date|date('Y-m-d') }}</span><br/>
+                        <span class="bold">Ticket Price: </span><span>{{ show.ticketPrice }}</span><br/>
+                        <span class="bold">Location: </span><span>{{ show.location }}</span><br/>
+                        <br/><span class="bold">Synopsis: </span><span>{{ show.synopsis }}</span>
+                    </div>
+                    <div class="col-6">
+                        <img class="img-fluid rounded mx-auto d-block shadow-lg p-3 mb-5 bg-white rounded" src="../images{{ asset(show.picturePath) }}" />
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="container-fluid futureShow">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="currentStatus">Upcoming Shows</p>
+                </div>
+            </div>
+            {% for show in returnArray|slice(1) %}
+                <div class="row">
+                    <div class="col-sm-6 showInfo">
+                        <h1 class="showTitle">{{ show.name }}</h1>
+                        <span class="bold">Date: </span><span>{{ show.date|date('Y-m-d') }}</span><br/>
+                        <span class="bold">Ticket Price: </span><span>{{ show.ticketPrice }}</span><br/>
+                        <span class="bold">Location: </span><span>{{ show.location }}</span><br/>
+                        <br/><span class="bold">Synopsis: </span><span>{{ show.synopsis }}</span>
+                    </div>
+                    <div class="col-6">
+                        <img class="img-fluid rounded mx-auto d-block shadow-lg p-3 mb-5 bg-white rounded" src="../images{{ asset(show.picturePath) }}"/>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if showRequest == -1 %}
+        <div class="container-fluid pastShow">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="currentStatus">Previous Shows</p>
+                </div>
+            </div>
+            {% for show in returnArray %}
+                <div class="row">
+                    <div class="col-sm-6 showInfo">
+                        <h1 class="showTitle">{{ show.name }}</h1>
+                        <span class="bold">Date: </span><span>{{ show.date|date('Y-m-d') }}</span><br/>
+                        <span class="bold">Ticket Price: </span><span>{{ show.ticketPrice }}</span><br/>
+                        <span class="bold">Location: </span><span>{{ show.location }}</span><br/>
+                        <br/><span class="bold">Synopsis: </span><span>{{ show.synopsis }}</span>
+                    </div>
+                    <div class="col-6">
+                        <img class="img-fluid rounded mx-auto d-block shadow-lg p-3 mb-5 bg-white rounded" src="../images{{ asset(show.picturePath) }}"/>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    {% if app.user %}
+
+    <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
+
+        <h2 id="suggestLabel">Want to suggest a show? Please enter a title below</h2>
+        {{ include('suggested_show/_form.html.twig') }}
+
+    </div>
+
+    {% endif %}
+
+    {% block javascripts %}
+        {# This should load the javascript from html.base first, otherwise it'll override#}
+        {{ parent() }}
+        <script src="{{ asset('js/show.js') }}"></script>
+
+    {% endblock %}
+    {#<a href="{{ path('show_new') }}">Create new</a>#}
+{% endblock %}
+
+

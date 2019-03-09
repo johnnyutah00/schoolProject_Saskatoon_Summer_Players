@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+{% block title %}Edit index{% endblock %}
+
+{% block body %}
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-10 text-center">
+                    <p class="currentStatus">Editable Shows</p>
+                </div>
+                <div class="col-2 text-center">
+                    <form action="{{ path('show_new') }}">
+                        <input type="submit" value="Add Show" id ="addShow" class="btn btn-primary"/>
+                    </form>
+                </div>
+            </div>
+
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="searchShow" class="control-label">Show to search for</label>
+                    <input type="text" class="form-control" id="searchShows"  name="showName" maxlength="50">
+                </div>
+
+                <div class="form-group"> <!-- Submit button !-->
+                    <button type="submit" class="btn btn-primary " id="showSearchButton" >Search Shows</button>
+                </div>
+            </form>
+
+            {% if returnArray == false %}
+                <p id="noShows">No shows found.</p>
+            {% else %}
+
+                <table id="showTable">
+                    <tr>
+                        <th>Show Name</th>
+                        <th>Show Budget</th>
+                        <th>Options</th>
+                    </tr>
+                    {% for show in returnArray %}
+                        <tr>
+                            <td>{{ show.name }}</td>
+                            <td>{{ show.budget }}</td>
+                            <td>
+                                <form action="{{ path('edit_show') }}">
+                                    <button type="submit" class="btn btn-primary" name="showID" value="{{ show.id }}">Edit</button>
+                                </form>
+                                <form action="{{ path('edit_index') }}">
+                                    <button type="submit" name="archiveId" id="archive" class="btn btn-primary"  value="{{ show.id }}">Archive</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+            {% endif %}
+        </div>
+{% endblock %}
+
+

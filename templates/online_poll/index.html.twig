@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Online Poll{% endblock %}
+
+{% block body %}
+
+    <div class="container col-lg-8 col-md-10 col-sm-12">
+        <h1 class="text-center">Online Poll</h1>
+
+    </div>
+    <div class="container col-lg-1">
+        <a href="{{ path('online_poll_new') }}" class="btn btn-primary text-center col-lg-12">Create New</a>
+    </div>
+
+
+
+    {% if online_polls is empty %}
+        <h2 class="text-center">There is currently no polls to vote on.</h2>
+    {% else %}
+
+            {% for online_poll in online_polls|reverse %}
+                <br/>
+                <br/>
+                <div class="container col-lg-6 col-md-8 col-sm-12">
+                    <div class="row">
+                        <div class="col-lg-10 ">
+                            <h2><u>{{ online_poll.Name }}</u></h2>
+                        </div>
+                        <div class="col-lg-2">
+                            <form method="post" action="{{ path('online_poll_delete', {'id': online_poll.id}) }}" onsubmit="return";>
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ online_poll.id) }}">
+                                <button class="btn btn-danger" type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row"><h4>{{ online_poll.Description }}</h4></div>
+                    <div class="row">
+
+                        {#{{ online_poll.Options ? online_poll.Options|join(', ') : '' }}#}
+                        <fieldset name="{{ online_poll.Name }}">
+
+                        {% for option in online_poll.Options %}
+
+                            <input type="radio" name="{{ online_poll.Name }}" value="{{ option }}">{{ option }}<br>
+
+                        {% endfor %}
+
+                        </fieldset>
+
+                    </div>
+
+
+                </div>
+
+
+
+
+            {% endfor %}
+    {% endif %}
+
+{% endblock %}
